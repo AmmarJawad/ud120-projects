@@ -35,6 +35,9 @@ def naive_classifier(features_train, labels_train):
     clf_fit = clf.fit(features_train, labels_train)
     clf_predict = clf.predict(features_test)
     from sklearn.metrics import accuracy_score
-    acc = accuracy_score(pred, labels_test)
+    acc = accuracy_score(clf_predict, labels_test)
+    print acc
     return acc
+
+
 naive_classifier(features_train, labels_train)
