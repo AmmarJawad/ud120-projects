@@ -28,15 +28,17 @@ plt.show()
 ################################################################################
 
 
-### your code here!  name your classifier object clf if you want the 
+### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
 
+def knearestneighbors():
+    from sklearn.neighbors import NearestNeighbors
+    clf = NearestNeighbors().fit(features_train)
+    distances, indices = clf.kneighbors(features_train)
+    return distances, indices
 
 
-
-
-
-
+knearestneighbors()
 
 try:
     prettyPicture(clf, features_test, labels_test)
