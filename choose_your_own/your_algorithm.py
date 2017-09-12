@@ -32,10 +32,13 @@ plt.show()
 ### visualization code (prettyPicture) to show you the decision boundary
 
 def knearestneighbors():
-    from sklearn.neighbors import NearestNeighbors
-    clf = NearestNeighbors().fit(features_train)
-    distances, indices = clf.kneighbors(features_train)
-    return distances, indices
+    from sklearn.neighbors import KNeighborsClassifier
+    clf = KNeighborsClassifier(n_neighbors=3)
+    clf.fit(features_train, labels_train)
+    pred = clf.predict(features_test)
+    from sklearn.metrics import accuracy_score
+    acc = accuracy_score(pred, labels_test)
+    print acc
 
 
 knearestneighbors()
