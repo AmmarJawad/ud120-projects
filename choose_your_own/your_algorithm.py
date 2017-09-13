@@ -6,9 +6,10 @@ from class_vis import prettyPicture
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
