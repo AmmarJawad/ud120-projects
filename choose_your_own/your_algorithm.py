@@ -3,6 +3,12 @@
 import matplotlib.pyplot as plt
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
 
@@ -31,17 +37,42 @@ plt.show()
 ### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
 
-def knearestneighbors():
-    from sklearn.neighbors import KNeighborsClassifier
-    clf = KNeighborsClassifier(n_neighbors=3)
-    clf.fit(features_train, labels_train)
-    pred = clf.predict(features_test)
-    from sklearn.metrics import accuracy_score
-    acc = accuracy_score(pred, labels_test)
-    print acc
 
+clf = RandomForestClassifier(min_samples_split=74)
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "Random forest accuracy: ", acc
+# Precision: 0.936
 
-knearestneighbors()
+# AdaBoost implementation
+clf = AdaBoostClassifier()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "AdaBoost accuracy: ", acc
+# Precision: 0.924
+
+clf = GaussianNB()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "NB GaussaiN accuracy: ", acc
+# Precision: 0.884
+
+clf = SVC()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "SVM accuracy: ", acc
+# Precision: 0.92
+
+clf = KNeighborsClassifier(n_neighbors=13)
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+print "K nearest Neighbors accuracy: ", acc
+# Precision: 0.936
 
 try:
     prettyPicture(clf, features_test, labels_test)
