@@ -68,7 +68,7 @@ acc = accuracy_score(pred, labels_test)
 print "SVM accuracy: ", acc
 # Precision: 0.92
 
-clf = KNeighborsClassifier(n_neighbors=13)
+clf = KNeighborsClassifier(n_neighbors=1)
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 acc = accuracy_score(pred, labels_test)
