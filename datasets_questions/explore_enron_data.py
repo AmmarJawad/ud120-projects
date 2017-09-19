@@ -76,8 +76,40 @@ def people_info():
     WCemails = enron_data['COLWELL WESLEY']['from_this_person_to_poi']
     print "Emails by Wesley Colwell: ", WCemails
 
-    JFstockoptions = enron_data['SKILLING JEFFREY K']['exercised_stock_options']
-    print "Value of stock options by Jeffrey K. Skilling: ", JFstockoptions
+    JFstock = enron_data['SKILLING JEFFREY K']['exercised_stock_options']
+    print "Value of stock options by Jeffrey K. Skilling: ", JFstock
+    # print enron_data['SKILLING JEFFREY K']
 
 
 people_info()
+
+
+def employees_with_salaries():
+    count_salary = 0
+    count_emails = 0
+    nan_total_payments = 0
+    total_people = 0
+    pois_with_nan = 0
+    pois = 0
+    for key in enron_data.keys():
+        if enron_data[key]['salary'] != 'NaN':
+            count_salary += 1
+        if enron_data[key]['email_address'] != 'NaN':
+            count_emails += 1
+        if enron_data[key]['total_payments'] == 'NaN':
+            nan_total_payments += 1
+        if enron_data[key]:
+            total_people += 1
+        if enron_data[key]['total_payments'] == 'NaN' and enron_data[key]['poi'] is True:
+            pois_with_nan += 1
+        if enron_data[key]['poi'] is True:
+            pois += 1
+    print "Sum of employees with known salaries: ", count_salary
+    print "Sum of employees with known email addresses: ", count_emails
+    print "Sum of employees with NaN in total payments: ", nan_total_payments
+    print "Total employees in dataset: ", total_people
+    print "POIs with NaN in total payments: ", pois_with_nan
+    print "POIs: ", pois
+
+
+employees_with_salaries()
