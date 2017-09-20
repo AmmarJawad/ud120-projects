@@ -41,9 +41,9 @@ test_color = "r"
 from sklearn.linear_model import LinearRegression
 reg = LinearRegression()
 reg.fit(feature_train, target_train)
-print "Slope: ", reg.coef_
+print "Slope with outlier: ", reg.coef_
 print "Intercept: ", reg.intercept_
-print "Score: ", reg.score(feature_train, target_train)
+print "Score: ", reg.score(feature_test, target_test)
 
 
 
@@ -68,6 +68,9 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+reg.fit(feature_test, target_test)
+plt.plot(feature_train, reg.predict(feature_train), color="b")
+print "New slope after removing a single outlier: ", reg.coef_
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
