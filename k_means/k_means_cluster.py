@@ -13,8 +13,7 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-
-
+import numpy as np
 
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
@@ -39,9 +38,10 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 
 
 ### load in the dict of dicts containing all the data on each person in the dataset
-data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
+data_dict = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 ### there's an outlier--remove it!
 data_dict.pop("TOTAL", 0)
+
 
 def max_min_exercised_stock():
     stock_options = []
@@ -50,6 +50,7 @@ def max_min_exercised_stock():
             stock_options.append((value['exercised_stock_options'], key))
     print "Max value: ", max(stock_options)
     print "Min value: ", min(stock_options)
+
 
 max_min_exercised_stock()
 
@@ -69,19 +70,32 @@ max_min_salary()
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 # feature_3 = "total_payments"
-poi  = "poi"
+poi = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+# Create two arrays with float values for salary and exercised_stock_options
+salary_stock = np.array([[200000., 1000000.]])
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
 for f1, f2 in finance_features:
-    plt.scatter( f1, f2 )
+    #salary.append([f1])
+    #stock.append([f2])
+    plt.scatter(f1, f2)
 plt.show()
+
+
+# Feature scaling using MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+fitting = scaler.fit(finance_features)
+transforming = scaler.transform(salary_stock)
+print "Transformed values of salary and stock: ", transforming
+
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
