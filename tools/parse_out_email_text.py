@@ -14,11 +14,7 @@ def parseOutText(f):
         f = open("email_file_name.txt", "r")
         text = parseOutText(f)
         """
-    f = open("email_file_name.txt", "r")
-    text = parseOutText(f)
     stemmer = SnowballStemmer("english")
-    return stemmer.stem(text)
-
     f.seek(0)  ### go back to beginning of file (annoying)
     all_text = f.read()
 
@@ -36,11 +32,10 @@ def parseOutText(f):
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
 
+        text_string = text_string.split()
 
 
-
-
-    return words
+    return ' '.join(stemmer.stem(w) for w in text_string)
 
 
 
