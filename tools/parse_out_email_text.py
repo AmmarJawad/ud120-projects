@@ -33,16 +33,17 @@ def parseOutText(f):
         ### space between each stemmed word)
 
         text_string = text_string.split()
+        for text in text_string:
+            words = words + stemmer.stem(text) + " "
 
-
-    return ' '.join(stemmer.stem(w) for w in text_string)
+    return words
 
 
 
 def main():
     ff = open("../text_learning/test_email.txt", "r")
     text = parseOutText(ff)
-    print text
+    print text[152]
 
 
 
