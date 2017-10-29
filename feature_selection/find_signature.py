@@ -1,4 +1,3 @@
-#!/usr/bin/python
 
 import pickle
 import numpy
@@ -8,7 +7,7 @@ numpy.random.seed(42)
 ### The words (features) and authors (labels), already largely processed.
 ### These files should have been created from the previous (Lesson 10)
 ### mini-project.
-words_file = "../text_learning/your_word_data.pkl" 
+words_file = "../text_learning/your_word_data.pkl"
 authors_file = "../text_learning/your_email_authors.pkl"
 word_data = pickle.load( open(words_file, "r"))
 authors = pickle.load( open(authors_file, "r") )
@@ -38,6 +37,31 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+import numpy as np
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+
+clf = tree.DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+acc = accuracy_score(pred, labels_test)
+
+# features with highest importance for modelling
+importances = clf.feature_importances_
+
+# list of feature importances sorted by desc
+indices = np.argsort(importances)[::-1]
 
 
+# feature importances and index position of highest number
+for feature in importances:
+    if feature > 0.2:
+        print "Feature above 0.2 threshold: ", feature
 
+print "length of training points", len(features_train) #look at slicer on line 34
+print "accuracy_score: ", acc
+print "Index position of highest feat. importance: ", indices[0] # 0th index for highest value
+
+feature_words = vectorizer.get_feature_names()
+
+print "Most important word: ", feature_words[indices[0]]
