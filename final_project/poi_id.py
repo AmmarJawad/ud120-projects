@@ -15,6 +15,7 @@ import numpy as np
 from sklearn import tree
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
@@ -70,7 +71,6 @@ clf = AdaBoostClassifier(random_state=42)
 # Transforming features into a df so that I won't have to remember to transform both features train and test.
 df_features = pd.DataFrame(features)
 
-from sklearn.cross_validation import train_test_split
 features_train, features_test, labels_train, labels_test = \
     train_test_split(df_features, labels, test_size=0.3, random_state=42)
 
