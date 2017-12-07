@@ -40,8 +40,11 @@ with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
 ### Task 2: Remove outliers
-# Removing the 'TOTAL' value in data_dict because it is a column sum of salaries and doesn't belong to any single employee.
+# Removing keys 'TOTAL', 'THE TRAVEL AGENCY IN THE PARK', 'BANNANTINE JAMES M' and 'GRAY RODNEY' in data_dict because they are either not employees or in the case of Gray and Bannantine they are outliers.
 del data_dict['TOTAL']
+del data_dict['THE TRAVEL AGENCY IN THE PARK']
+del data_dict['BANNANTINE JAMES M']
+del data_dict['GRAY RODNEY']
 
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
@@ -56,8 +59,7 @@ labels, features = targetFeatureSplit(data)
 ### you'll need to use Pipelines. For more info:
 ### http://scikit-learn.org/stable/modules/pipeline.html
 
-# Provided to give you a starting point. Try a variety of classifiers.
-clf = AdaBoostClassifier(random_state=42)
+
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
 ### using our testing script. Check the tester.py script in the final project
@@ -74,15 +76,25 @@ df_features = pd.DataFrame(features)
 features_train, features_test, labels_train, labels_test = \
     train_test_split(df_features, labels, test_size=0.3, random_state=42)
 
-### Create new feature(s)
-# New feature is bonus/salary and null-values replaced by 0
-features_train['bonus_salary_ratio'] = features_train.loc[:, 5] / features_train.loc[:, 1]
-features_train['bonus_salary_ratio'] = np.nan_to_num(features_train['bonus_salary_ratio'])
 
-# Repeat same feature engineering for test data
-features_test['bonus_salary_ratio'] = features_test.loc[:, 5] / features_test.loc[:, 1]
-features_test['bonus_salary_ratio'] = np.nan_to_num(features_test['bonus_salary_ratio'])
 
+clf = GradientBoostingClassifier(random_state=42,
+                                 min_samples_leaf=6,
+                                 min_samples_split=20,
+                                 n_estimators=98,
+                                 max_features=5,
+                                 max_depth=5
+                                )
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+
+# Classifier scores
+f1_score_gbm = f1_score(pred, labels_test)
+precision_score_gbm = precision_score(pred, labels_test, average='weighted')
+recall_score_gbm = recall_score(pred, labels_test, average='weighted')
+print "F1-score", f1_score_gbm
+print "Precision score: ", precision_score_gbm
+print "Recall score: ", recall_score_gbm
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
