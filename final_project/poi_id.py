@@ -32,7 +32,7 @@ from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 ### The first feature must be "poi".
 features_list = ['poi', 'salary', 'deferral_payments', 'total_payments',
                 'loan_advances', 'bonus', 'restricted_stock_deferred',
-                'deferred_income', 'total_stock_value', 'expenses'
+                'deferred_income', 'total_stock_value'
                ]
 
 ### Load the dictionary containing the dataset
